@@ -1,3 +1,7 @@
+# Environment variables — jangan commit ke repo
+.env
+.env.production
+
 # Dependency directories
 node_modules/
 jspm_packages/
