@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Pixel Overlords",
+    "category": "Gaming",
+    "followers": 142000,
+    "description": "Daily high-res gaming leaks, mod showcases, and community tournaments for the elite.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuA7794zP3LxnzibgoELxTVgiA8ye7a_--q0Cfn840pVWkuDthxfBsBv87HfQCcGUOj05iEK05vONWbegm3zCSVRDIuVI_boBJgW1OY4-z9ucsss6iYQndySSYa3JRyu-PqiRjyAtTm9FZtg7kZVhS2BDzuBOjxyAZLVxtT9bIruDYuT-4erk2xlcDiNZfiu_vOBZotj9Ogu4cqM5f0AbJF9rTUKXNJwfISW2jqAueQ4H-dEwMoe63rRanmPgJkWqJbw1iRtxQTfamE"
+  },
+  {
+    "id": 2,
+    "name": "Void Reflections",
+    "category": "DankMemes",
+    "followers": 890000,
+    "description": "The deepest level of irony and surreal humor. Fresh memes delivered directly from the future.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuDrlnbz-b0gQ4DleSnDUVrsL9MR3wzl5PEsiYQJ-SHNEyzengvYHXITHPpL94xDAbfyk5bbIo1Avvs8Dgf5bjSk2JKFr0XSYlZ28-mPaqlnOC8bAdHpYOSEe3QbpUn_UKVDtvDngvxccJ1V2cT0_DqydBZBmgGKjyZr_zsHtXenyQbo9HZdLbWi2-ldrdFpJlnYhTnAVhqk32ob8Jg9fXDGY81BLvxsgngm3q5jI7aYQJTUkAROS7xvbn-sibtqTK5nxqWtIv-3C7U"
+  },
+  {
+    "id": 3,
+    "name": "CineWave Hub",
+    "category": "Entertainment",
+    "followers": 56000,
+    "description": "Exclusive movie trailers, indie short films, and critical reviews for the true cinema lover.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuDatlPEgjrnwdjZ0LbPHGUghSNnTfqiHk595kVhmr2QiCwkFCL8-4MAn8n-MqyRi1eWAH2wT_CIdXQVqPjRNQaIDbl9PF-JezuIM4wrycm-5TySrargpa4bT6VApZFBGStgJmohjVOKkMbZeCBRWQq2lrdznOzEPRBz_xHItzgIv9GKX0kVdmHZYcvIuuPd74QoDnaKJFncjXNo7gmbastdkToHzA0vnR5qM2JJZnHZOH1pkI1s2ILsYrbqEQYYu_Y2H6oUuiZmVA0"
+  },
+  {
+    "id": 4,
+    "name": "Neural Gallery",
+    "category": "AI-Art",
+    "followers": 212000,
+    "description": "Curated AI-generated masterpieces and prompt engineering workshops for the digital artisan.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuBqG9YSs-k1E9p87VU_BOj3fHciSQCH9xAg_8w_rqhRl29LVienr6aLnHd5awzrZBLtYhJ7Wdzhs_Av1YpdtOISAZRuD0jJ7RZedfeDLpDg_ZHFeg2yRA163b-LLgqUpikCRTRIzjokho0XqYbq0ejwEvhE0nPxMJpqE0Dum-m6AX_9zIcUz7nNrbWHee2i8fz-gTRl0IwGbeetZ77c4HNp9Jc2z2luM9cmALy9E9YfQJS29XU-0tgTkUs5ZoSG70m6cm5mVoNrfQ0"
+  },
+  {
+    "id": 5,
+    "name": "The Debugger",
+    "category": "Tech",
+    "followers": 78000,
+    "description": "The latest in coding hardware, software vulnerabilities, and silicon valley gossip.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuC1Xf4aYkKS1ElqVrdWu0CLd_xeIgug1dgWiS2DjSZep0opfSnCdK6SZfnPdjetwqFctSFq53g_4d8zF3k2Sjlc88-lz90hjLdDg2t6qBhAH0hghfPEKScsl80Ub0qGf8mKojYr3y6ZfRjk50DWQfPvw5a4MLvHsafir-DhfVPr27Mo2ltOnpQU4AMsShZznkkJvuI2LYMYGxSBCmgXLXWKt0Bwycn6HMRZxtR0wtCwLTgxJu7WNua9dz35gzaMliboLAxbmPVGg-w"
+  },
+  {
+    "id": 6,
+    "name": "Apex Circle",
+    "category": "Elite",
+    "followers": 305000,
+    "description": "Lifestyle optimization, network growth strategies, and high-performance community chats.",
+    "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuAznwUSUrbB-j6RZlLd0mcqzHUij_wt_53ImSdokLT471E315Gj7b654LXAjTeSEAFfcJ7daQGPPq4IwAO0NfiAzFAzwdLvykyjGv8-5cOQswfJiwUxjLxytZC9LrX_XXS0mLjXbkz9YzUNVN4on6SspaG0K0Dazyjghq3oIya7rcQlm-05B5qmTV4Sgb6UaMwrJsHmG8Y67x6XlVNzC9jH4hers7oH7YKqUM9BwX5o57cwChtzliAvSrhxgkEY_Z_KyWR-6Tm-F4o"
+  }
+]

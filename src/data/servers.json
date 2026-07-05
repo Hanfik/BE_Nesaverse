@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Pixel Raiders Elite",
+    "description": "The premier hub for indie game discovery and speedrun competitions.",
+    "members": 45829,
+    "online": 1200,
+    "categories": ["Gaming", "Events"],
+    "verified": true,
+    "featured": false,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuB2tTeKh5jxP2Zfn0lUzEw1j7BBgDUReo0usj0t3uQ7-cDduCyb4bXygwQVhHBayOW2h2PmwdUMPsdzKDUPFtY9nMZC8BYWX2KM_yElv8n2Kvpw1OG0gpBJYaw6wvnKW14KSGOzGHu7CHTgsoth1VfJOfwV7z7tmqCCIlc2StPdzwg-zuWe6a5l_Ej07Pqo_NWlsLEr61yIY_2YdYtK6NmUsidrxmWlchuIKJ1PLJXYP8vNkXhBMwWKdcJtsruMEZvdPSosGTmNADM",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuBpeKreiLsYfCvvenfOr48E4vwsjDgtAjh84I73Zjt7N2ZQLxB9XRPwKuIrjVDOFzOx_pPHLEe7f0lIfmGcBP89UMjoDClaiz4IhctxWHIX5AvbGkhJ0ug0PInl2QzbqRVtLpuLOZzzscZ-_qgK0cEMXVPDBNHftt3Yt1vPynj5pWHmGez1_PKdrOeX6nrP-nPGHWRG8oKJKltobiN0O1Mfw4NjvqLgITwoioyDog4W1zhzUBpmBTVgfRkIW1eTLRUoDLbEhKbhgbY"
+  },
+  {
+    "id": 2,
+    "name": "Nesa Forge AI",
+    "description": "Pushing the boundaries of digital culture using generative AI and neural networks.",
+    "members": 12104,
+    "online": 2000,
+    "categories": ["Tech", "Innovation"],
+    "verified": false,
+    "featured": false,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuAVHKmJbxVoAgPu-ifL_YnaB7iei6hAdvQnuJB0BNxekwxRU77LPVIdHBov3xBz_RipoqzdcJTIHyHUSbbbtnUX7rsM9b8mPg5Mm9qVsl6aXAXwD9JSgmg3Z7WKzeuiLSe8uEx30ORD6TVWgDdRsk_0FjV8HrpR_IiKgDZoecUdtJB6olfuGoGb3olw4WPG4q_q360vAsfDq9TxBM0f4KrdCEqTHztjSCktjbWs9NwZbPOt5rPNnZLOluqZAVcMZ3stRknD4Y-4wOk",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuBw_Kda9hGbK5CeJHGhbAmtKEGyB_9ZwVp1MO3Bs_Ak10E3Tm_GTbl-W9IM55w7eofURvXoDcNvSXwb-ully_wLMuOhfOxbgeZe_yAT853yTvTa_sA27hlFM4DAWusYdQD1U3Q5bBzTC0Ti-wE84TS7A8RoCG3qIuSZAoXIR3vGCYLaeTlvI1sBTMuo2bcXsBopwXdBZ4w3DxgCg1HkLWi34LrHM8m1TmQnvRgs6Qw-GD1c-mCnrcdbZhhAW-v_t71MLAA8FvqlDN4"
+  },
+  {
+    "id": 3,
+    "name": "Nesa Legends Clan",
+    "description": "The ultimate developmental collective. Trade, build, and conquer together.",
+    "members": 88293,
+    "online": 4500,
+    "categories": ["Social", "Building"],
+    "verified": true,
+    "featured": false,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuAcyXoOqOsveb2jMfQlRhkXm1u3uyxOCZ07SZzCO7Mns5zdNeNyweEBwbCcyPv74xKjrONJAt22YRDoDWf9evhKPxEMWM0hgFO6R6aXPUkOtDvO2jID1YKPMvIRs-TwMn8TrbXuqPrurKaM5PwmNgVo2yOvF8WQBUY8VqVXWitl1s1xx5rpZYRQB8mR1XClujIto-x3zTSRhouVaAthCEovOo_aRhJKblwRyql5HqqaiksTPkGntpRuUUakvTHVVhYnIIuZGxLf5m8",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuDwYOSM2qj-6ryPCNhCSWBSuLc3L02teqnMpi7NQJYFdSLj35MPgtz7sYA8DVlnJjJWMmoGkrl35VcEGQwO1Cuvm_OKwHTTRGxCDnK5YhsgOK10SJzmWf8JQ93P44L6pf3lYjm7y-0-94E6o9by8_9VUuocFKIXr5psf0r4TJqo1buKqE750XMCB1Q8w6xmaDLT8I_lq2jHIQh36zcoZrPtYsje2lwDytF_tVh-bJ5k7wSsDv5g-essiFbY-7kEV_xIxI8d5Xm8Cck"
+  },
+  {
+    "id": 4,
+    "name": "The Nesa Architect Syndicate",
+    "description": "The flagship community for high-tier creation and digital strategy. Join thousands of creators in daily challenges.",
+    "members": 124000,
+    "online": 12400,
+    "categories": ["Creators", "Strategy", "Elite"],
+    "verified": true,
+    "featured": true,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuAgGT94TqyTeeSisd_hz85gre5YLRrfphiTSQCaccbj19Dy3buVr4XeM8OTpw6F8Ml1n8NNlfYK18uhvONIPJFGY_yWy_dvZ6SaU0a17mY0wTNncJJsWj38L8rLcRmtYGSjl605dNAZ5Ez9OsM4zwn1WnDNsJj39Y_jH_4FALEaVe8OdEc91DuOIUAAa5ScagneGsYepqQn5nVEH-PVqXNqbIscuS_DiA8L5RTQonxQBtKJ753lU8gaGdT00xMdCrX8k0eBa3bW_H4",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuAgGT94TqyTeeSisd_hz85gre5YLRrfphiTSQCaccbj19Dy3buVr4XeM8OTpw6F8Ml1n8NNlfYK18uhvONIPJFGY_yWy_dvZ6SaU0a17mY0wTNncJJsWj38L8rLcRmtYGSjl605dNAZ5Ez9OsM4zwn1WnDNsJj39Y_jH_4FALEaVe8OdEc91DuOIUAAa5ScagneGsYepqQn5nVEH-PVqXNqbIscuS_DiA8L5RTQonxQBtKJ753lU8gaGdT00xMdCrX8k0eBa3bW_H4"
+  },
+  {
+    "id": 5,
+    "name": "CryptoVault DAO",
+    "description": "Decentralized finance meets the NesaVerse. Alpha calls, DeFi guides, and on-chain gaming.",
+    "members": 31200,
+    "online": 890,
+    "categories": ["Crypto", "Finance"],
+    "verified": false,
+    "featured": false,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuB2tTeKh5jxP2Zfn0lUzEw1j7BBgDUReo0usj0t3uQ7-cDduCyb4bXygwQVhHBayOW2h2PmwdUMPsdzKDUPFtY9nMZC8BYWX2KM_yElv8n2Kvpw1OG0gpBJYaw6wvnKW14KSGOzGHu7CHTgsoth1VfJOfwV7z7tmqCCIlc2StPdzwg-zuWe6a5l_Ej07Pqo_NWlsLEr61yIY_2YdYtK6NmUsidrxmWlchuIKJ1PLJXYP8vNkXhBMwWKdcJtsruMEZvdPSosGTmNADM",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuBpeKreiLsYfCvvenfOr48E4vwsjDgtAjh84I73Zjt7N2ZQLxB9XRPwKuIrjVDOFzOx_pPHLEe7f0lIfmGcBP89UMjoDClaiz4IhctxWHIX5AvbGkhJ0ug0PInl2QzbqRVtLpuLOZzzscZ-_qgK0cEMXVPDBNHftt3Yt1vPynj5pWHmGez1_PKdrOeX6nrP-nPGHWRG8oKJKltobiN0O1Mfw4NjvqLgITwoioyDog4W1zhzUBpmBTVgfRkIW1eTLRUoDLbEhKbhgbY"
+  },
+  {
+    "id": 6,
+    "name": "Art & Design Nexus",
+    "description": "Portfolio sharing, design challenges, and creative workshops for digital artists.",
+    "members": 67500,
+    "online": 2100,
+    "categories": ["Art & Design", "Education"],
+    "verified": true,
+    "featured": false,
+    "banner": "https://lh3.googleusercontent.com/aida-public/AB6AXuAVHKmJbxVoAgPu-ifL_YnaB7iei6hAdvQnuJB0BNxekwxRU77LPVIdHBov3xBz_RipoqzdcJTIHyHUSbbbtnUX7rsM9b8mPg5Mm9qVsl6aXAXwD9JSgmg3Z7WKzeuiLSe8uEx30ORD6TVWgDdRsk_0FjV8HrpR_IiKgDZoecUdtJB6olfuGoGb3olw4WPG4q_q360vAsfDq9TxBM0f4KrdCEqTHztjSCktjbWs9NwZbPOt5rPNnZLOluqZAVcMZ3stRknD4Y-4wOk",
+    "icon": "https://lh3.googleusercontent.com/aida-public/AB6AXuBw_Kda9hGbK5CeJHGhbAmtKEGyB_9ZwVp1MO3Bs_Ak10E3Tm_GTbl-W9IM55w7eofURvXoDcNvSXwb-ully_wLMuOhfOxbgeZe_yAT853yTvTa_sA27hlFM4DAWusYdQD1U3Q5bBzTC0Ti-wE84TS7A8RoCG3qIuSZAoXIR3vGCYLaeTlvI1sBTMuo2bcXsBopwXdBZ4w3DxgCg1HkLWi34LrHM8m1TmQnvRgs6Qw-GD1c-mCnrcdbZhhAW-v_t71MLAA8FvqlDN4"
+  }
+]
