@@ -48,7 +48,8 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date().t
 
 // ── Error handler ─────────────────────────────────────────────
 app.use((err, req, res, next) => {
-  console.error('[Error]', err.message);
+  console.error('❌ Backend Error:', err.message);
+  console.error(err.stack);
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
