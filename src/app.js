@@ -8,6 +8,7 @@ const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 const requestLogger = require('./middleware/requestLogger');
 
+const authRouter        = require('./routes/auth.routes');
 const statsRouter      = require('./routes/stats.routes');
 const communitiesRouter= require('./routes/communities.routes');
 const serversRouter    = require('./routes/servers.routes');
@@ -44,9 +45,10 @@ app.get('/', (req, res) => {
   res.send('Backend berjalan dengan PostgreSQL');
 });
 
-// ── Public Routes (GET only) ──────────────────────────────────
-app.use('/api/stats',       statsRouter);
-app.use('/api/communities', communitiesRouter);
+// ── Public Routes ──────────────────────────────────────────────
+app.use('/api/auth',       authRouter);
+app.use('/api/stats',      statsRouter);
+app.use('/api/communities',communitiesRouter);
 app.use('/api/servers',     serversRouter);
 app.use('/api/channels',    channelsRouter);
 app.use('/api/instagram',   instagramRouter);

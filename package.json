@@ -4,7 +4,7 @@
   "description": "NesaVerse API - Backend for community platform",
   "main": "api/index.js",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "start": "node server.js",

@@ -13,6 +13,10 @@ const options = {
     },
     servers: [
       {
+        url: 'https://be-nesaverse.vercel.app',
+        description: 'Production (Vercel)',
+      },
+      {
         url: 'http://localhost:5001',
         description: 'Development server',
       },
