@@ -2,8 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
 
 const statsRouter      = require('./routes/stats.routes');
 const communitiesRouter= require('./routes/communities.routes');
@@ -35,12 +33,16 @@ app.use(cors({
 
 app.use(express.json());
 
-// ── Swagger UI ────────────────────────────────────────────────
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'NesaVerse API Docs',
-}));
-app.get('/api-docs.json', (req, res) => res.json(swaggerSpec));
+// ── Swagger UI (skip on Vercel — static file serving not supported) ──
+if (!process.env.VERCEL) {
+  const swaggerUi = require('swagger-ui-express');
+  const swaggerSpec = require('./swagger');
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'NesaVerse API Docs',
+  }));
+  app.get('/api-docs.json', (req, res) => res.json(swaggerSpec));
+}
 
 // ── Routes ────────────────────────────────────────────────────
 app.use('/api/stats',       statsRouter);
