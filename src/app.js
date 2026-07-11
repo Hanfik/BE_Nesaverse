@@ -21,11 +21,23 @@ const donationsRouter  = require('./routes/donations.routes');
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://fe-nesaverse.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+].filter(Boolean);
+
 // ── Middleware ─────────────────────────────────────────────────
 app.use(requestLogger);
 app.use(cors({
-  origin: "*",
-  methods: "GET,POST,PUT,DELETE",
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) cb(null, true);
+    else cb(new Error(`CORS: origin ${origin} not allowed`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
 }));
 app.use(express.json());
 
