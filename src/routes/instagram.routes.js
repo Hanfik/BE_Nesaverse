@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getInstagram, createInstagram, updateInstagram, deleteInstagram } = require('../controllers/instagram.controller');
 
 /**
@@ -63,7 +64,7 @@ router.get('/', getInstagram);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createInstagram);
+router.post('/', verifyToken, createInstagram);
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.post('/', createInstagram);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateInstagram);
+router.put('/:id', verifyToken, updateInstagram);
 
 /**
  * @swagger
@@ -133,6 +134,6 @@ router.put('/:id', updateInstagram);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteInstagram);
+router.delete('/:id', verifyToken, deleteInstagram);
 
 module.exports = router;

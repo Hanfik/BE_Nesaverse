@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getYouTube, createYouTube, updateYouTube, deleteYouTube } = require('../controllers/youtube.controller');
 
 /**
@@ -63,7 +64,7 @@ router.get('/', getYouTube);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createYouTube);
+router.post('/', verifyToken, createYouTube);
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.post('/', createYouTube);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateYouTube);
+router.put('/:id', verifyToken, updateYouTube);
 
 /**
  * @swagger
@@ -133,6 +134,6 @@ router.put('/:id', updateYouTube);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteYouTube);
+router.delete('/:id', verifyToken, deleteYouTube);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getTikTok, createTikTok, updateTikTok, deleteTikTok } = require('../controllers/tiktok.controller');
 
 /**
@@ -63,7 +64,7 @@ router.get('/', getTikTok);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createTikTok);
+router.post('/', verifyToken, createTikTok);
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.post('/', createTikTok);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateTikTok);
+router.put('/:id', verifyToken, updateTikTok);
 
 /**
  * @swagger
@@ -133,6 +134,6 @@ router.put('/:id', updateTikTok);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteTikTok);
+router.delete('/:id', verifyToken, deleteTikTok);
 
 module.exports = router;

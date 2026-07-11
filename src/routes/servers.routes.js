@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getServers, createServer, updateServer, deleteServer } = require('../controllers/servers.controller');
 
 /**
@@ -69,7 +70,7 @@ router.get('/', getServers);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createServer);
+router.post('/', verifyToken, createServer);
 
 /**
  * @swagger
@@ -110,7 +111,7 @@ router.post('/', createServer);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateServer);
+router.put('/:id', verifyToken, updateServer);
 
 /**
  * @swagger
@@ -139,6 +140,6 @@ router.put('/:id', updateServer);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteServer);
+router.delete('/:id', verifyToken, deleteServer);
 
 module.exports = router;

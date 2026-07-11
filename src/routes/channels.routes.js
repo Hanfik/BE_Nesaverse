@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getChannels, createChannel, updateChannel, deleteChannel } = require('../controllers/channels.controller');
 
 /**
@@ -69,7 +70,7 @@ router.get('/', getChannels);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createChannel);
+router.post('/', verifyToken, createChannel);
 
 /**
  * @swagger
@@ -110,7 +111,7 @@ router.post('/', createChannel);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateChannel);
+router.put('/:id', verifyToken, updateChannel);
 
 /**
  * @swagger
@@ -139,6 +140,6 @@ router.put('/:id', updateChannel);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteChannel);
+router.delete('/:id', verifyToken, deleteChannel);
 
 module.exports = router;

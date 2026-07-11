@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getDonations, getTopDonors, createDonation } = require('../controllers/donations.controller');
 
 /**
@@ -82,6 +83,6 @@ router.get('/top', getTopDonors);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createDonation);
+router.post('/', verifyToken, createDonation);
 
 module.exports = router;

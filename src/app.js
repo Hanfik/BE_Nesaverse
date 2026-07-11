@@ -3,6 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
+const { verifyToken } = require('./middleware/authMiddleware');
+const errorHandler = require('./middleware/errorHandler');
+const notFound = require('./middleware/notFound');
+const requestLogger = require('./middleware/requestLogger');
+
 const statsRouter      = require('./routes/stats.routes');
 const communitiesRouter= require('./routes/communities.routes');
 const serversRouter    = require('./routes/servers.routes');
@@ -15,25 +20,16 @@ const donationsRouter  = require('./routes/donations.routes');
 
 const app = express();
 
-// ── CORS ──────────────────────────────────────────────────────
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:3000',
-].filter(Boolean);
-
+// ── Middleware ─────────────────────────────────────────────────
+app.use(requestLogger);
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) cb(null, true);
-    else cb(new Error(`CORS: origin ${origin} not allowed`));
-  },
+  origin: "*",
+  methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
-
 app.use(express.json());
 
-// ── Swagger UI (skip on Vercel — static file serving not supported) ──
+// ── Swagger UI (skip on Vercel) ───────────────────────────────
 if (!process.env.VERCEL) {
   const swaggerUi = require('swagger-ui-express');
   const swaggerSpec = require('./swagger');
@@ -44,7 +40,12 @@ if (!process.env.VERCEL) {
   app.get('/api-docs.json', (req, res) => res.json(swaggerSpec));
 }
 
-// ── Routes ────────────────────────────────────────────────────
+// ── Root ──────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.send('Backend berjalan dengan PostgreSQL');
+});
+
+// ── Public Routes (GET only) ──────────────────────────────────
 app.use('/api/stats',       statsRouter);
 app.use('/api/communities', communitiesRouter);
 app.use('/api/servers',     serversRouter);
@@ -57,11 +58,8 @@ app.use('/api/donations',   donationsRouter);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
 
-// ── Error handler ─────────────────────────────────────────────
-app.use((err, req, res, next) => {
-  console.error('❌ Backend Error:', err.message);
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
+// ── 404 & Error Handler ──────────────────────────────────────
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;

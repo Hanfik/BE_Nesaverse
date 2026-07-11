@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const { getRoblox, createRoblox, updateRoblox, deleteRoblox } = require('../controllers/roblox.controller');
 
 /**
@@ -58,7 +59,7 @@ router.get('/', getRoblox);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createRoblox);
+router.post('/', verifyToken, createRoblox);
 
 /**
  * @swagger
@@ -99,7 +100,7 @@ router.post('/', createRoblox);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateRoblox);
+router.put('/:id', verifyToken, updateRoblox);
 
 /**
  * @swagger
@@ -128,6 +129,6 @@ router.put('/:id', updateRoblox);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteRoblox);
+router.delete('/:id', verifyToken, deleteRoblox);
 
 module.exports = router;
