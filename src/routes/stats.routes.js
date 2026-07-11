@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getStats } = require('../controllers/stats.controller');
+const { getStats, recordVisit, getChartData } = require('../controllers/stats.controller');
 
-router.get('/', getStats);
+router.get('/',        getStats);
+router.post('/visit',  recordVisit);
+router.get('/chart',   getChartData);
 
 module.exports = router;

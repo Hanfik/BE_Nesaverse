@@ -1,0 +1,1020 @@
+{
+	"info": {
+		"_postman_id": "c1f7b76e-347e-40dc-bc5b-ee481541620c",
+		"name": "NesaVerse API Testing",
+		"description": "Koleksi API Postman untuk NesaVerse Backend. Berisi seluruh endpoint untuk General, Communities, Servers, Channels, Donations, YouTube, TikTok, Instagram, dan Roblox Hub.\n\nDilengkapi dengan **Automated Test Scripts** untuk memvalidasi format response, tipe data, serta parameter dinamis (menangkap ID hasil POST lalu menggunakannya pada PUT/DELETE secara otomatis).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. General & Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Verify health response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");",
+									"    pm.expect(jsonData).to.have.property(\"time\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Endpoint health check untuk memverifikasi apakah server backend berjalan."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Verify stats response structure\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"communities\");",
+									"    pm.expect(jsonData).to.have.property(\"members\");",
+									"    pm.expect(jsonData).to.have.property(\"accounts\");",
+									"    pm.expect(jsonData).to.have.property(\"servers\");",
+									"    pm.expect(jsonData).to.have.property(\"systemStatus\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							]
+						},
+						"description": "Mengambil data statistik global dari dashboard NesaVerse."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Communities & Servers",
+			"item": [
+				{
+					"name": "Get Communities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of communities\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an(\"array\");",
+									"    if (jsonData.length > 0) {",
+									"        pm.expect(jsonData[0]).to.have.property(\"name\");",
+									"        pm.expect(jsonData[0]).to.have.property(\"platform\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/communities",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"communities"
+							]
+						},
+						"description": "Mengambil list seluruh komunitas terdaftar di NesaVerse."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Servers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of servers\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/servers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"servers"
+							]
+						},
+						"description": "Mengambil daftar server (misal: Discord, Minecraft, dll) yang aktif di NesaVerse."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Channels",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of channels\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/channels",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"channels"
+							]
+						},
+						"description": "Mengambil daftar channel komunitas."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Donations",
+			"item": [
+				{
+					"name": "Get Donations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"donations"
+							]
+						},
+						"description": "Mengambil riwayat donasi terbaru."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top Donors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donations/top",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"donations",
+								"top"
+							]
+						},
+						"description": "Mengambil daftar donatur teratas (berdasarkan total donasi)."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Donation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Verify created donation details\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.expect(jsonData.amount).to.eql(150000);",
+									"    pm.expect(jsonData.name).to.eql(\"Postman Tester\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman Tester\",\n    \"is_anonymous\": false,\n    \"amount\": 150000,\n    \"message\": \"Menguji endpoint donasi melalui Postman collection\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/donations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"donations"
+							]
+						},
+						"description": "Menambahkan donasi baru."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. YouTube Hub",
+			"item": [
+				{
+					"name": "Get YouTube List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of channels\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/youtube",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"youtube"
+							]
+						},
+						"description": "Mengambil seluruh channel YouTube yang terdaftar."
+					},
+					"response": []
+				},
+				{
+					"name": "Create YouTube Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Save YouTube ID for updates\", function () {",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.collectionVariables.set(\"createdYouTubeId\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman YT Test\",\n    \"thumbnail\": \"https://placehold.co/400x400/png\",\n    \"subscribers\": \"25K\",\n    \"description\": \"Akun uji coba otomatis dari Postman\",\n    \"link\": \"https://youtube.com/@postman_test\",\n    \"category\": \"Tech\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/youtube",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"youtube"
+							]
+						},
+						"description": "Membuat entri channel YouTube baru. ID entri ini akan ditangkap dan disimpan di variabel `createdYouTubeId` secara dinamis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update YouTube Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify edit success\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"Postman YT Test Edited\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman YT Test Edited\",\n    \"thumbnail\": \"https://placehold.co/400x400/png\",\n    \"subscribers\": \"30K\",\n    \"description\": \"Deskripsi yang telah diedit via Postman\",\n    \"link\": \"https://youtube.com/@postman_test_edited\",\n    \"category\": \"Tech\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/youtube/{{createdYouTubeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"youtube",
+								"{{createdYouTubeId}}"
+							]
+						},
+						"description": "Mengedit channel YouTube berdasarkan `createdYouTubeId` yang didapatkan dari test script request sebelumnya."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete YouTube Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify delete success message\", function () {",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/youtube/{{createdYouTubeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"youtube",
+								"{{createdYouTubeId}}"
+							]
+						},
+						"description": "Menghapus channel YouTube berdasarkan `createdYouTubeId` agar database tetap bersih setelah pengujian."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. TikTok Hub",
+			"item": [
+				{
+					"name": "Get TikTok List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of accounts\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tiktok",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tiktok"
+							]
+						},
+						"description": "Mengambil seluruh akun TikTok terdaftar."
+					},
+					"response": []
+				},
+				{
+					"name": "Create TikTok Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Save TikTok ID for updates\", function () {",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.collectionVariables.set(\"createdTikTokId\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"creator\": \"@postman_tt_test\",\n    \"title\": \"Postman Automated TikTok Test Video\",\n    \"views\": \"10K\",\n    \"likes\": \"500\",\n    \"category\": \"Gaming\",\n    \"thumb\": \"https://placehold.co/400x400/png\",\n    \"avatar\": \"https://placehold.co/100x100/png\",\n    \"trending\": true,\n    \"duration\": \"01:05\",\n    \"link\": \"https://tiktok.com/@postman_tt_test/video/1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tiktok",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tiktok"
+							]
+						},
+						"description": "Membuat entri akun/video TikTok baru. ID entri ini akan ditangkap dan disimpan di variabel `createdTikTokId` secara dinamis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update TikTok Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify edit success\", function () {",
+									"    pm.expect(jsonData.title).to.eql(\"Postman Automated TikTok Test Video Edited\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"creator\": \"@postman_tt_test\",\n    \"title\": \"Postman Automated TikTok Test Video Edited\",\n    \"views\": \"12K\",\n    \"likes\": \"600\",\n    \"category\": \"Gaming\",\n    \"thumb\": \"https://placehold.co/400x400/png\",\n    \"avatar\": \"https://placehold.co/100x100/png\",\n    \"trending\": false,\n    \"duration\": \"01:10\",\n    \"link\": \"https://tiktok.com/@postman_tt_test/video/1\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tiktok/{{createdTikTokId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tiktok",
+								"{{createdTikTokId}}"
+							]
+						},
+						"description": "Mengedit akun/video TikTok berdasarkan `createdTikTokId` yang didapatkan dari test script request sebelumnya."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete TikTok Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify delete success message\", function () {",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tiktok/{{createdTikTokId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tiktok",
+								"{{createdTikTokId}}"
+							]
+						},
+						"description": "Menghapus akun/video TikTok berdasarkan `createdTikTokId` agar database tetap bersih setelah pengujian."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6. Instagram Hub",
+			"item": [
+				{
+					"name": "Get Instagram List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of accounts\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/instagram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"instagram"
+							]
+						},
+						"description": "Mengambil seluruh akun Instagram terdaftar."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Instagram Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Save Instagram ID for updates\", function () {",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.collectionVariables.set(\"createdInstagramId\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman IG Test\",\n    \"handle\": \"@postman_ig_test\",\n    \"avatar\": \"https://placehold.co/100x100/png\",\n    \"followers\": \"15K\",\n    \"posts\": 50,\n    \"category\": \"Lifestyle\",\n    \"bio\": \"Uji coba dynamic Postman scripting\",\n    \"verified\": true,\n    \"link\": \"https://instagram.com/postman_ig_test\",\n    \"gradient\": \"linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/instagram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"instagram"
+							]
+						},
+						"description": "Membuat entri akun Instagram baru. ID entri ini akan ditangkap dan disimpan di variabel `createdInstagramId` secara dinamis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Instagram Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify edit success\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"Postman IG Test Edited\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman IG Test Edited\",\n    \"handle\": \"@postman_ig_test\",\n    \"avatar\": \"https://placehold.co/100x100/png\",\n    \"followers\": \"18K\",\n    \"posts\": 52,\n    \"category\": \"Lifestyle\",\n    \"bio\": \"Uji coba dynamic Postman scripting (Edited)\",\n    \"verified\": true,\n    \"link\": \"https://instagram.com/postman_ig_test\",\n    \"gradient\": \"linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/instagram/{{createdInstagramId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"instagram",
+								"{{createdInstagramId}}"
+							]
+						},
+						"description": "Mengedit akun Instagram berdasarkan `createdInstagramId` yang didapatkan dari test script request sebelumnya."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Instagram Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify delete success message\", function () {",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/instagram/{{createdInstagramId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"instagram",
+								"{{createdInstagramId}}"
+							]
+						},
+						"description": "Menghapus akun Instagram berdasarkan `createdInstagramId` agar database tetap bersih setelah pengujian."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7. Roblox Hub",
+			"item": [
+				{
+					"name": "Get Roblox List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is an array of games\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roblox",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roblox"
+							]
+						},
+						"description": "Mengambil seluruh game Roblox terdaftar."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Roblox Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Save Roblox ID for updates\", function () {",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"    pm.collectionVariables.set(\"createdRobloxId\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman Roblox Game Test\",\n    \"thumbnail\": \"https://placehold.co/400x400/png\",\n    \"description\": \"Game uji coba otomatis dari Postman\",\n    \"link_game\": \"https://roblox.com/games/postman_test_game\",\n    \"link_community\": \"https://discord.gg/nesaverse_postman\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roblox",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roblox"
+							]
+						},
+						"description": "Membuat entri game Roblox baru. ID entri ini akan ditangkap dan disimpan di variabel `createdRobloxId` secara dinamis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Roblox Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify edit success\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"Postman Roblox Game Test Edited\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman Roblox Game Test Edited\",\n    \"thumbnail\": \"https://placehold.co/400x400/png\",\n    \"description\": \"Game uji coba otomatis dari Postman (Edited)\",\n    \"link_game\": \"https://roblox.com/games/postman_test_game\",\n    \"link_community\": \"https://discord.gg/nesaverse_postman\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roblox/{{createdRobloxId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roblox",
+								"{{createdRobloxId}}"
+							]
+						},
+						"description": "Mengedit game Roblox berdasarkan `createdRobloxId` yang didapatkan dari test script request sebelumnya."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Roblox Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify delete success message\", function () {",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roblox/{{createdRobloxId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roblox",
+								"{{createdRobloxId}}"
+							]
+						},
+						"description": "Menghapus game Roblox berdasarkan `createdRobloxId` agar database tetap bersih setelah pengujian."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://be-nesaverse.vercel.app/api",
+			"type": "string"
+		},
+		{
+			"key": "createdYouTubeId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "createdTikTokId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "createdInstagramId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "createdRobloxId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
