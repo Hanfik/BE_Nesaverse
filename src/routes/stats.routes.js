@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../middleware/authMiddleware');
 const { getStats, recordVisit, getChartData } = require('../controllers/stats.controller');
 
 /**
@@ -55,7 +54,7 @@ router.get('/', getStats);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/visit', verifyToken, recordVisit);
+router.post('/visit', recordVisit);
 
 /**
  * @swagger
