@@ -1,8 +1,8 @@
-const sql = require('../db');
+const pool = require('../db');
 
 const getCommunities = async (req, res, next) => {
   try {
-    const rows = await sql`
+    const { rows } = await pool.query(`
       SELECT
         id,
         name,
@@ -14,7 +14,7 @@ const getCommunities = async (req, res, next) => {
         status
       FROM communities
       ORDER BY id ASC
-    `;
+    `);
     res.json(rows);
   } catch (err) {
     next(err);

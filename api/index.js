@@ -1,10 +1,9 @@
-const serverless = require('serverless-http');
 const app = require('../src/app');
 
-console.log('✅ Backend On Running');
+const PORT = process.env.PORT || 5001;
 
-module.exports = serverless(app, {
-  request: (req, _res) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  },
+app.listen(PORT, () => {
+  console.log(`🚀 NesaVerse API running at http://localhost:${PORT}`);
 });
+
+module.exports = app;

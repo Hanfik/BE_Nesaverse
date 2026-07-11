@@ -1,10 +1,21 @@
+const pg = require('pg');
 require('dotenv').config();
-const { neon } = require('@neondatabase/serverless');
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set. Check your .env file.');
-}
+const { Pool } = pg;
 
-const sql = neon(process.env.DATABASE_URL);
+const pool = new Pool({
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
+  port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-module.exports = sql;
+pool.connect()
+  .then(() => console.log('✅ Connected to Postgres'))
+  .catch((err) => console.error('❌ Connection error:', err.message));
+
+module.exports = pool;
