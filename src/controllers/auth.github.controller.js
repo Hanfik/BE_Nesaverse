@@ -21,16 +21,51 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000).unref();
 
+// ── Environment Detection ────────────────────────────────────
+function getEnvUrls() {
+  const isVercel = !!process.env.VERCEL;
+  const port = process.env.PORT || 5001;
+
+  const backendBaseUrl = isVercel
+    ? process.env.GITHUB_CALLBACK_URL?.replace(/\/api\/auth\/github\/callback\/?$/, '') || 'https://be-nesaverse.vercel.app'
+    : `http://localhost:${port}`;
+
+  const frontendUrl = isVercel
+    ? (process.env.FRONTEND_URL || 'https://www.nesaverse.my.id')
+    : 'http://localhost:5173';
+
+  return { backendBaseUrl, frontendUrl, isVercel };
+}
+
+function getGithubCredentials() {
+  const { isVercel } = getEnvUrls();
+  if (isVercel) {
+    return {
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    };
+  }
+  return {
+    clientId: process.env.GITHUB_CLIENT_ID_DEV || process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET_DEV || process.env.GITHUB_CLIENT_SECRET,
+  };
+}
+
 // ── Generate GitHub OAuth URL ────────────────────────────────
 const getGitHubAuthURL = (req, res) => {
   try {
     const state = crypto.randomUUID();
     pendingStates.set(state, Date.now());
 
+    const { backendBaseUrl } = getEnvUrls();
+    const { clientId } = getGithubCredentials();
+    const redirectUri = `${backendBaseUrl}/api/auth/github/callback`;
+
     const params = new URLSearchParams({
-      client_id: process.env.GITHUB_CLIENT_ID,
+      client_id: clientId,
       scope: 'read:user',
       state,
+      redirect_uri: redirectUri,
     });
 
     const url = `${GITHUB_AUTHORIZE_URL}?${params.toString()}`;
@@ -44,7 +79,7 @@ const getGitHubAuthURL = (req, res) => {
 // ── Handle GitHub OAuth Callback ─────────────────────────────
 const handleGitHubCallback = async (req, res) => {
   const { code, state } = req.query;
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const { frontendUrl } = getEnvUrls();
 
   // 1. Validate state (CSRF protection)
   if (!state || !pendingStates.has(state)) {
@@ -58,6 +93,7 @@ const handleGitHubCallback = async (req, res) => {
 
   try {
     // 2. Exchange code for access token
+    const { clientId, clientSecret } = getGithubCredentials();
     const tokenRes = await fetch(GITHUB_TOKEN_URL, {
       method: 'POST',
       headers: {
@@ -65,8 +101,8 @@ const handleGitHubCallback = async (req, res) => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        client_id: clientId,
+        client_secret: clientSecret,
         code,
       }),
     });

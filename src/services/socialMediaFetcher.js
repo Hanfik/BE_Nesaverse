@@ -4,6 +4,10 @@ const YT_HANDLE_REGEX = /youtube\.com\/@([a-zA-Z0-9._-]+)\/?$/;
 const YT_CHANNEL_REGEX = /youtube\.com\/channel\/(UC[a-zA-Z0-9_-]+)/;
 const YT_SHORT_REGEX = /youtu\.be\/([a-zA-Z0-9_-]+)/;
 
+const { fetchDiscordInvite, extractInviteCode: extractDiscordCode } = require('./discordInviteResolver');
+const { fetchWhatsAppChannel, extractChannelId: extractWhatsAppId } = require('./whatsappChannelResolver');
+const { fetchRobloxGame, extractPlaceId: extractRobloxId } = require('./robloxGameResolver');
+
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36';
 const IG_APP_ID = '936619743392459';
 
@@ -328,7 +332,19 @@ async function fetchFollowers(platform, url) {
     return { ...await fetchYouTubeSubscribers(info.value), platform: 'youtube' };
   }
 
-  throw new Error('Platform tidak didukung. Gunakan: instagram, tiktok, youtube');
+  if (platform === 'discord') {
+    return { ...await fetchDiscordInvite(url), platform: 'discord' };
+  }
+
+  if (platform === 'whatsapp') {
+    return { ...await fetchWhatsAppChannel(url), platform: 'whatsapp' };
+  }
+
+  if (platform === 'roblox') {
+    return { ...await fetchRobloxGame(url), platform: 'roblox' };
+  }
+
+  throw new Error('Platform tidak didukung. Gunakan: instagram, tiktok, youtube, discord, whatsapp, roblox');
 }
 
 module.exports = { fetchFollowers, extractUsername };

@@ -7,6 +7,13 @@ const ALLOWED_DOMAINS = [
   'youtube.com',
   'googleusercontent.com',
   'ui-avatars.com',
+  'cdn.discordapp.com',
+  'media.discordapp.net',
+  'roblox.com',
+  'tr.rbxcdn.com',
+  't.rbxcdn.com',
+  'lookaside.fbsbx.com',
+  'images.unsplash.com',
 ];
 
 const MAX_CONTENT_LENGTH = 10 * 1024 * 1024; // 10MB

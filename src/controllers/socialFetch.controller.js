@@ -1,6 +1,6 @@
 const { fetchFollowers } = require('../services/socialMediaFetcher');
 
-const VALID_PLATFORMS = ['instagram', 'tiktok', 'youtube'];
+const VALID_PLATFORMS = ['instagram', 'tiktok', 'youtube', 'discord', 'whatsapp', 'roblox'];
 
 const fetchSocialData = async (req, res, next) => {
   try {
