@@ -1,8 +1,11 @@
 const pool = require('../db');
 
+const MAX_RECENT_DONATIONS = 50;
+const TOP_DONORS_LIMIT = 5;
+
 const getDonations = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM donations ORDER BY created_at DESC LIMIT 50');
+    const { rows } = await pool.query(`SELECT * FROM donations ORDER BY created_at DESC LIMIT $1`, [MAX_RECENT_DONATIONS]);
     res.json(rows);
   } catch (err) { next(err); }
 };
@@ -14,8 +17,8 @@ const getTopDonors = async (req, res, next) => {
              SUM(amount) AS total, COUNT(*) AS count
       FROM donations
       GROUP BY CASE WHEN is_anonymous THEN 'Anonymous' ELSE name END
-      ORDER BY total DESC LIMIT 5
-    `);
+      ORDER BY total DESC LIMIT $1
+    `, [TOP_DONORS_LIMIT]);
     res.json(rows);
   } catch (err) { next(err); }
 };

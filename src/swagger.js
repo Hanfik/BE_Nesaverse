@@ -69,16 +69,12 @@ const options = {
         Stats: {
           type: 'object',
           properties: {
-            communities:          { type: 'integer', example: 500 },
-            members:              { type: 'integer', example: 50000 },
-            accounts:             { type: 'integer', example: 2000 },
-            servers:              { type: 'integer', example: 100 },
-            totalVisitors:        { type: 'integer', example: 4892103 },
             activeCommunities:    { type: 'integer', example: 12 },
+            totalMembers:         { type: 'integer', example: 500000 },
             nesaVelocity:         { type: 'integer', example: 842 },
-            viralIndex:           { type: 'string', example: '9.2' },
+            totalVisitors:        { type: 'integer', example: 4892103 },
+            totalDonations:       { type: 'integer', example: 175000 },
             systemStatus:         { type: 'string', example: 'online' },
-            totalPlatforms:       { type: 'integer', example: 6 },
             platformDistribution: {
               type: 'object',
               properties: {

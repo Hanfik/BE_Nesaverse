@@ -1,57 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const { login, register } = require('../controllers/auth.controller');
+const { getGitHubAuthURL, handleGitHubCallback } = require('../controllers/auth.github.controller');
+const { rateLimit } = require('../middleware/rateLimit');
 
 /**
  * @swagger
- * /api/auth/login:
- *   post:
- *     summary: Admin login
+ * /api/auth/github:
+ *   get:
+ *     summary: Get GitHub OAuth authorization URL
  *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [username, password]
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
  *     responses:
  *       200:
- *         description: Login success, returns JWT token
- *       401:
- *         description: Invalid credentials
+ *         description: Returns GitHub OAuth URL
+ *       500:
+ *         description: Failed to generate URL
  */
-router.post('/login', login);
+router.get(
+  '/github',
+  rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: 'Terlalu banyak percobaan. Coba lagi dalam 15 menit.' }),
+  getGitHubAuthURL
+);
 
 /**
  * @swagger
- * /api/auth/register:
- *   post:
- *     summary: Register new admin
+ * /api/auth/github/callback:
+ *   get:
+ *     summary: GitHub OAuth callback handler
  *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [username, password]
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
+ *     parameters:
+ *       - in: query
+ *         name: code
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: state
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
- *       201:
- *         description: Register success
- *       400:
- *         description: Username already exists
+ *       302:
+ *         description: Redirects to frontend with token or error
  */
-router.post('/register', register);
+router.get('/github/callback', handleGitHubCallback);
 
 module.exports = router;
