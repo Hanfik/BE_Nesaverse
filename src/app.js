@@ -25,6 +25,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   "https://fe-nesaverse.vercel.app",
   "https://nesaverse.my.id",
+  "https://www.nesaverse.my.id",
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
