@@ -1,29 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../middleware/authMiddleware');
-const { getDonations, getTopDonors, createDonation } = require('../controllers/donations.controller');
+const { getDonations, getTopDonors, createDonation, uploadProof } = require('../controllers/donations.controller');
+const { rateLimit } = require('../middleware/rateLimit');
 
 /**
  * @swagger
  * /api/donations:
  *   get:
- *     summary: Get all donations
+ *     summary: Get all completed donations
  *     tags: [Donations]
  *     responses:
  *       200:
- *         description: List of recent donations (max 50)
+ *         description: List of recent completed donations (max 50)
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Donation'
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.get('/', getDonations);
 
@@ -42,12 +36,6 @@ router.get('/', getDonations);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/TopDonor'
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.get('/top', getTopDonors);
 
@@ -55,7 +43,7 @@ router.get('/top', getTopDonors);
  * @swagger
  * /api/donations:
  *   post:
- *     summary: Create a new donation
+ *     summary: "Create a new donation (status: pending)"
  *     tags: [Donations]
  *     requestBody:
  *       required: true
@@ -66,23 +54,40 @@ router.get('/top', getTopDonors);
  *     responses:
  *       201:
  *         description: Donation created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Donation'
- *       400:
- *         description: Invalid amount
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
-router.post('/', verifyToken, createDonation);
+router.post('/',
+  rateLimit({ windowMs: 60 * 60 * 1000, max: 10, message: 'Terlalu banyak request donasi. Coba lagi dalam 1 jam.' }),
+  createDonation
+);
+
+/**
+ * @swagger
+ * /api/donations/{id}/proof:
+ *   post:
+ *     summary: Upload payment proof for a donation
+ *     tags: [Donations]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               proof_url:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Proof uploaded successfully
+ */
+router.post('/:id/proof',
+  rateLimit({ windowMs: 60 * 60 * 1000, max: 10, message: 'Terlalu banyak upload bukti. Coba lagi dalam 1 jam.' }),
+  uploadProof
+);
 
 module.exports = router;

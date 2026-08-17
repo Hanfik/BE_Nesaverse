@@ -14,9 +14,12 @@ const ALLOWED_DOMAINS = [
   't.rbxcdn.com',
   'lookaside.fbsbx.com',
   'images.unsplash.com',
+  'pinimg.com',
+  'nesaverse.my.id',
 ];
 
-const MAX_CONTENT_LENGTH = 10 * 1024 * 1024; // 10MB
+const MAX_IMAGE_LENGTH = 10 * 1024 * 1024;  // 10MB
+const MAX_VIDEO_LENGTH = 50 * 1024 * 1024;  // 50MB
 
 function isAllowedDomain(hostname) {
   return ALLOWED_DOMAINS.some(d => hostname === d || hostname.endsWith('.' + d));
@@ -56,12 +59,12 @@ const imageProxy = async (req, res, next) => {
     }
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'image/*',
+        'Accept': 'image/*, video/*',
       },
       signal: controller.signal,
       redirect: 'follow',
@@ -70,22 +73,28 @@ const imageProxy = async (req, res, next) => {
     clearTimeout(timeout);
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: `Gagal fetch gambar: HTTP ${response.status}` });
+      return res.status(response.status).json({ error: `Gagal fetch: HTTP ${response.status}` });
     }
 
     const contentType = response.headers.get('content-type') || '';
-    if (!contentType.startsWith('image/')) {
-      return res.status(400).json({ error: 'Response bukan gambar' });
+    const isImage = contentType.startsWith('image/');
+    const isVideo = contentType.startsWith('video/');
+
+    if (!isImage && !isVideo) {
+      return res.status(400).json({ error: 'Response bukan gambar atau video' });
     }
 
     const contentLength = parseInt(response.headers.get('content-length') || '0', 10);
-    if (contentLength > MAX_CONTENT_LENGTH) {
-      return res.status(413).json({ error: 'Gambar terlalu besar (maks 10MB)' });
+    const maxSize = isVideo ? MAX_VIDEO_LENGTH : MAX_IMAGE_LENGTH;
+    if (contentLength > maxSize) {
+      const maxMB = isVideo ? '50MB' : '10MB';
+      return res.status(413).json({ error: `File terlalu besar (maks ${maxMB})` });
     }
 
     const buffer = Buffer.from(await response.arrayBuffer());
-    if (buffer.length > MAX_CONTENT_LENGTH) {
-      return res.status(413).json({ error: 'Gambar terlalu besar (maks 10MB)' });
+    if (buffer.length > maxSize) {
+      const maxMB = isVideo ? '50MB' : '10MB';
+      return res.status(413).json({ error: `File terlalu besar (maks ${maxMB})` });
     }
 
     res.setHeader('Content-Type', contentType);
@@ -95,7 +104,7 @@ const imageProxy = async (req, res, next) => {
     res.send(buffer);
   } catch (err) {
     if (err.name === 'AbortError') {
-      return res.status(504).json({ error: 'Timeout fetching gambar' });
+      return res.status(504).json({ error: 'Timeout fetching media' });
     }
     next(err);
   }

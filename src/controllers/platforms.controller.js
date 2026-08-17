@@ -5,7 +5,7 @@ function like(val) {
 }
 
 const VALID_PLATFORM_TYPES = ['discord', 'whatsapp', 'instagram', 'tiktok', 'youtube', 'roblox', 'fanart'];
-const VALID_STATUSES = ['active', 'inactive'];
+const VALID_STATUSES = ['active', 'inactive', 'pending'];
 
 function validatePlatformInput(data, isUpdate = false) {
   const errors = [];
@@ -50,15 +50,16 @@ const getPlatforms = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-/* ─── GET /api/platforms/all (admin — no status filter) ─── */
+/* ─── GET /api/platforms/all (admin — no default status filter) ─── */
 const getAllPlatforms = async (req, res, next) => {
   try {
-    const { type, search, sort } = req.query;
+    const { type, search, sort, status } = req.query;
     const conditions = [];
     const params = [];
     let idx = 1;
 
     if (type) { conditions.push(`pt.name = $${idx++}`); params.push(type); }
+    if (status && status !== 'all') { conditions.push(`p.status = $${idx++}`); params.push(status); }
     if (search) { conditions.push(`(LOWER(p.name) LIKE $${idx} OR LOWER(p.handle) LIKE $${idx} OR LOWER(p.description) LIKE $${idx})`); params.push(like(search)); idx++; }
 
     const where = conditions.length ? 'WHERE ' + conditions.join(' AND ') : '';
@@ -155,4 +156,67 @@ const deletePlatform = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-module.exports = { getPlatforms, getAllPlatforms, getTypes, createPlatform, updatePlatform, deletePlatform };
+/* ─── POST /api/platforms/submit (public — fanart submission) ─── */
+const submitFanart = async (req, res, next) => {
+  try {
+    const { name, handle, avatar, description, category, source_url, honeypot } = req.body;
+
+    // Honeypot check — bots will fill this, humans won't
+    if (honeypot) {
+      return res.status(200).json({ success: true, message: 'Karya berhasil dikirim!' });
+    }
+
+    // Validate required fields
+    const errors = [];
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      errors.push('Judul karya wajib diisi');
+    } else if (name.length > 200) {
+      errors.push('Judul karya maksimal 200 karakter');
+    }
+    if (!handle || typeof handle !== 'string' || handle.trim().length === 0) {
+      errors.push('Nama artist wajib diisi');
+    } else if (handle.length > 100) {
+      errors.push('Nama artist maksimal 100 karakter');
+    }
+    if (!avatar || typeof avatar !== 'string' || avatar.trim().length === 0) {
+      errors.push('URL gambar wajib diisi');
+    } else {
+      try { new URL(avatar); } catch { errors.push('URL gambar tidak valid'); }
+    }
+    if (description && typeof description === 'string' && description.length > 500) {
+      errors.push('Deskripsi maksimal 500 karakter');
+    }
+    const VALID_CATEGORIES = ['Digital Art', 'Pixel Art', 'AI Art', 'Manga', 'Fan Art', 'Other'];
+    if (category && !VALID_CATEGORIES.includes(category)) {
+      errors.push(`Kategori harus salah satu dari: ${VALID_CATEGORIES.join(', ')}`);
+    }
+    if (source_url) {
+      try { new URL(source_url); } catch { errors.push('URL source tidak valid'); }
+    }
+
+    if (errors.length > 0) {
+      return res.status(400).json({ error: errors.join(', ') });
+    }
+
+    // Resolve fanart type_id
+    const typeRes = await pool.query('SELECT id FROM platform_types WHERE name = $1', ['fanart']);
+    if (!typeRes.rows.length) {
+      return res.status(500).json({ error: 'Fanart type not configured' });
+    }
+    const type_id = typeRes.rows[0].id;
+
+    const { rows } = await pool.query(
+      `INSERT INTO platforms (type_id, name, handle, description, avatar, url, status, category)
+       VALUES ($1, $2, $3, $4, $5, $6, 'pending', $7) RETURNING *`,
+      [type_id, name.trim(), handle.trim(), description?.trim() || null, avatar.trim(), source_url?.trim() || null, category || null]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: 'Karya berhasil dikirim! Akan ditinjau oleh admin.',
+      id: rows[0].id,
+    });
+  } catch (err) { next(err); }
+};
+
+module.exports = { getPlatforms, getAllPlatforms, getTypes, createPlatform, updatePlatform, deletePlatform, submitFanart };

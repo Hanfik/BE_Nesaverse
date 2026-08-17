@@ -30,13 +30,19 @@ pool.on('error', (err) => {
 // Health-check: verify connectivity, then release the client back to the pool.
 pool.connect()
   .then((client) => {
-    // Prevent a dropped connection on this checked-out client from
-    // emitting an unhandled 'error' event and crashing the process.
     client.on('error', (err) => {
       console.error('❌ Client error:', err.message);
     });
     return client.query('SELECT 1')
-      .then(() => console.log('✅ Connected to Postgres'))
+      .then(async () => {
+        console.log('✅ Connected to Postgres');
+        // Auto-migration: add proof_url column if missing
+        try {
+          await client.query(
+            "ALTER TABLE donations ADD COLUMN IF NOT EXISTS proof_url TEXT"
+          );
+        } catch (_) { /* table may not exist yet */ }
+      })
       .finally(() => client.release());
   })
   .catch((err) => {

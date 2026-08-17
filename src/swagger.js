@@ -315,6 +315,8 @@ const options = {
             is_anonymous: { type: 'boolean', example: false },
             amount:       { type: 'number', example: 50000 },
             message:      { type: 'string', nullable: true },
+            proof_url:    { type: 'string', nullable: true, example: 'https://r2.dev/uploads/donations/proof/abc.jpg' },
+            status:       { type: 'string', enum: ['pending', 'verified', 'completed', 'rejected'], example: 'pending' },
             created_at:   { type: 'string', format: 'date-time' },
           },
         },

@@ -13,7 +13,7 @@ const getStats = async (req, res, next) => {
       `),
       pool.query("SELECT COALESCE(SUM(CASE WHEN followers ~ '^[0-9.,]+$' THEN REPLACE(REPLACE(followers, '.', ''), ',', '')::bigint ELSE 0 END),0)::bigint AS total FROM platforms WHERE status='active'"),
       pool.query("SELECT COALESCE(SUM((extra->>'online')::int),0) AS total FROM platforms WHERE status='active' AND type_id=1"),
-      pool.query("SELECT COALESCE(SUM(amount),0)::bigint AS total FROM donations"),
+      pool.query("SELECT COALESCE(SUM(amount),0)::bigint AS total FROM donations WHERE status = 'completed'"),
     ]);
 
     if (!statsRows.rows.length) return res.status(404).json({ error: 'Stats not found' });
@@ -94,7 +94,7 @@ const getChartData = async (req, res, next) => {
     try {
       const { rows } = await pool.query(`
         SELECT TO_CHAR(DATE_TRUNC('month', created_at), 'Mon') AS month, SUM(amount) AS total
-        FROM donations WHERE created_at >= NOW() - INTERVAL '6 months'
+        FROM donations WHERE created_at >= NOW() - INTERVAL '6 months' AND status = 'completed'
         GROUP BY DATE_TRUNC('month', created_at) ORDER BY DATE_TRUNC('month', created_at)
       `);
       donationTrend = rows.map(r => ({ month: r.month, total: Number(r.total) }));

@@ -18,6 +18,9 @@ const platformsRouter = require("./routes/platforms.routes");
 const donationsRouter = require("./routes/donations.routes");
 const socialFetchRouter = require("./routes/socialFetch.routes");
 const proxyRouter = require("./routes/proxy.routes");
+const uploadRouter = require("./routes/upload.routes");
+const categoriesRouter = require("./routes/categories.routes");
+const adminDonationsRouter = require("./routes/adminDonations.routes");
 
 const app = express();
 
@@ -39,7 +42,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) cb(null, true);
       else cb(new Error(`CORS: origin ${origin} not allowed`));
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
 );
@@ -72,6 +75,9 @@ app.use("/api/platforms", platformsRouter);
 app.use("/api/donations", donationsRouter);
 app.use("/api/social", socialFetchRouter);
 app.use("/api/proxy", proxyRouter);
+app.use("/api/upload", uploadRouter);
+app.use("/api/categories", categoriesRouter);
+app.use("/api/admin/donations", adminDonationsRouter);
 
 app.get("/api/health", async (req, res) => {
   try {
